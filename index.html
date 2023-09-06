@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Geolocalización</title>
+    <script>
+        // Función para obtener las coordenadas de la ubicación del dispositivo
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("La geolocalización no es compatible con este navegador.");
+            }
+        }
+
+        // Función para mostrar las coordenadas en un formulario
+        function showPosition(position) {
+            document.getElementById("latitude").value = position.coords.latitude;
+            document.getElementById("longitude").value = position.coords.longitude;
+        }
+       
+        // Función para verificar si las coordenadas están dentro de un rango
+        function checkLocation() {
+            var latitude = parseFloat(document.getElementById("latitude").value);
+            var longitude = parseFloat(document.getElementById("longitude").value);
+
+            var targetLatitude = 24.161314048217783; // Latitud de la ubicación objetivo
+            var targetLongitude = -110.31308484884946; // Longitud de la ubicación objetivo
+            var range = 0.1; // Radio en grados (ajusta según tus necesidades)
+
+            var distance = Math.sqrt(Math.pow(latitude - targetLatitude, 2) + Math.pow(longitude - targetLongitude, 2));
+
+            if (distance <= range) {
+                alert("Estás dentro del rango de la ubicación objetivo.");
+            } else {
+                alert("Estás fuera del rango de la ubicación objetivo.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="getLocation()">Obtener Coordenadas</button>
+    <form>
+        Latitud: <input type="text" id="latitude" readonly><br>
+        Longitud: <input type="text" id="longitude" readonly><br>
+        <button type="button" onclick="checkLocation()">Verificar Rango</button>
+    </form>
+</body>
+</html>
